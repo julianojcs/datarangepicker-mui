@@ -1,72 +1,64 @@
-import { useState, useRef } from "react"
-import styled from "styled-components"
-import { TextField, InputAdornment } from "@mui/material"
-import DateRangePicker from "@mui/lab/DateRangePicker"
-import AdapterDateFns from "@mui/lab/AdapterDateFns"
-import LocalizationProvider from "@mui/lab/LocalizationProvider"
-import brLocale from "date-fns/locale/pt-BR"
-import { Event as EventIcon } from "@mui/icons-material"
+import { useState } from 'react'
+import styled from 'styled-components'
+import { TextField, InputAdornment } from '@mui/material'
+import DateRangePicker from '@mui/lab/DateRangePicker'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import brLocale from 'date-fns/locale/pt-BR'
+import { Event as EventIcon } from '@mui/icons-material'
 
 const DateRange = ({
   disabled,
   values,
   setValues,
-  labels = ["Início", "Fim"],
+  labels = ['Início', 'Fim'],
   error
 }) => {
-  const [localError, setLocalError] = useState([null, null])
-  const [helperText, setHelperText] = useState(["", ""])
-  const dtRangeIni = useRef()
-  const dtRangeFim = useRef()
+  const [helperText, setHelperText] = useState([null, null])
+
+  const inputProps = {
+    endAdornment: (
+      <InputAdornment position='end'>
+        <EventIcon style={{ pointerEvents: 'none' }} />
+      </InputAdornment>
+    )
+  }
 
   const handleDataChange = (newValue) => {
-    console.log("teste: ", newValue[0] === null)
+    console.log('teste: ', newValue[0] === null)
     setValues(newValue)
 
     if (
-      String(newValue[0]) === "Invalid Date" ||
+      String(newValue[0]) === 'Invalid Date' ||
       newValue[0] === null ||
-      String(newValue[1]) === "Invalid Date"
+      String(newValue[1]) === 'Invalid Date'
     ) {
       if (newValue[0] === null) {
-        localError[0] = true
         helperText[0] = `Data ${labels[0]} obrigatória.`
-        setLocalError(localError)
         setHelperText(helperText)
-      } else if (String(newValue[0]) === "Invalid Date") {
-        localError[0] = true
+      } else if (String(newValue[0]) === 'Invalid Date') {
         helperText[0] = `Data ${labels[0]} inválida.`
-        setLocalError(localError)
         setHelperText(helperText)
       } else {
-        localError[0] = false
-        helperText[0] = ""
-        setLocalError(localError)
+        helperText[0] = null
         setHelperText(helperText)
       }
-      if (String(newValue[1]) === "Invalid Date") {
-        localError[1] = true
+      if (String(newValue[1]) === 'Invalid Date') {
         helperText[1] = `Data ${labels[1]} inválida.`
-        setLocalError(localError)
         setHelperText(helperText)
       } else {
-        localError[1] = false
-        helperText[1] = ""
-        setLocalError(localError)
+        helperText[1] = null
         setHelperText(helperText)
       }
-      console.log(localError, helperText)
     } else {
-      setLocalError([false, false])
-      setHelperText(["", ""])
+      setHelperText([null, null])
 
       if (newValue[0] && newValue[1]) {
         if (newValue[0] > newValue[1]) {
-          setLocalError([null, true])
-          setHelperText(["", "Data Início deve ser menor que a data Fim!"])
+          helperText[1] = `Data ${label[0]} deve ser menor que a data ${label[1]}.`
+          setHelperText(helperText)
         } else {
-          setLocalError([null, null])
-          setHelperText(["", ""])
+          setHelperText([null, null])
         }
       }
     }
@@ -87,45 +79,31 @@ const DateRange = ({
             <Wrapper>
               <TextField
                 {...startProps}
-                ref={dtRangeIni}
-                autoComplete="off"
-                size="small"
-                variant="outlined"
+                autoComplete='off'
+                size='small'
+                variant='outlined'
                 disabled={disabled}
-                error={localError[0]}
-                helperText={localError[0] && helperText[0]}
+                error={!!helperText[0]}
+                helperText={!!helperText[0] && helperText[0]}
                 InputLabelProps={{
                   shrink: true
                 }}
-                type="date"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <EventIcon style={{ pointerEvents: "none" }} />
-                    </InputAdornment>
-                  )
-                }}
+                type='date'
+                InputProps={inputProps}
               />
               <TextField
                 {...endProps}
-                ref={dtRangeFim}
-                autoComplete="off"
-                size="small"
-                variant="outlined"
+                autoComplete='off'
+                size='small'
+                variant='outlined'
                 disabled={disabled}
-                error={localError[1]}
-                helperText={localError[1] && helperText[1]}
+                error={!!helperText[1]}
+                helperText={!!helperText[1] && helperText[1]}
                 InputLabelProps={{
                   shrink: true
                 }}
-                type="date"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <EventIcon style={{ pointerEvents: "none" }} />
-                    </InputAdornment>
-                  )
-                }}
+                type='date'
+                InputProps={inputProps}
               />
             </Wrapper>
           )
