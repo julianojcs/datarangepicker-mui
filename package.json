@@ -1,0 +1,40 @@
+{
+  "title": "DateRangePicker Material Ui Demo",
+  "version": "1.0.0",
+  "private": false,
+  "name": "datarangepicker-mui",
+  "description": "https://github.com/mui-org/material-ui/blob/v5.0.4/docs/src/pages/components/date-range-picker/BasicDateRangePicker.js",
+  "main": "index.js",
+  "author": "Juliano Costa Silva",
+  "license": "ISC",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@mui/icons-material": "5.0.4",
+    "@mui/lab": "latest",
+    "@mui/material": "latest",
+    "date-fns": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "styled-components": "5.3.2"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
