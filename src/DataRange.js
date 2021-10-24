@@ -25,7 +25,6 @@ const DateRange = ({
   }
 
   const handleDataChange = (newValue) => {
-    console.log('teste: ', newValue[0] === null)
     setValues(newValue)
 
     if (
@@ -76,7 +75,7 @@ const DateRange = ({
         }}
         renderInput={(startProps, endProps) => {
           return (
-            <Wrapper>
+            <Wrapper error={helperText}>
               <TextField
                 {...startProps}
                 autoComplete='off'
@@ -124,6 +123,13 @@ const Wrapper = styled.div`
     padding: 0;
     margin-left: 8px;
     margin-right: 8px;
+  }
+
+  & div:nth-of-type(1) > div > div > svg {
+    color: ${({ error }) => (error[0] ? '#d32f2f' : 'inherit')};
+  }
+  & div:nth-of-type(2) > div > div > svg {
+    color: ${({ error }) => (error[1] ? '#d32f2f' : 'inherit')};
   }
 `
 
